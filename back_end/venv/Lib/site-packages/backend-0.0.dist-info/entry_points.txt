@@ -1,0 +1,5 @@
+[console_scripts]
+initialize_backend_db = backend.scripts.initialize_db:main
+
+[paste.app_factory]
+main = backend:main
