@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-inter);
+}
+
+.padding-nav {
+  padding: 25px 5%;
+}
+
+.padding-product {
+  padding: 25px 5%;
+}
+
+.banner-slide-item {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7.5 rem;
+}
+
+.banner-image-2 {
+  position: relative;
+}
+
+/* .banner-image-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 747px;
+  width: 100%;
+  min-height: 747px;
+  background-color: #ele3e5;
+  border-radius: 100%;
+  z-index: -1;
+} */
+
+.manfaat {
+  margin-top: -3rem;
+  position: relative;
+  z-index: 5;
+}
+
+.brand {
+  margin-top: -4rem;
+  position: relative;
+  z-index: 5;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-family: "slick";
+  font-size: 500px;
+  line-height: 1;
+  opacity: 0.75;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.hamburger-menu {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
