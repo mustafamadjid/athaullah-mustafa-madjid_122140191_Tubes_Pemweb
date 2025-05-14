@@ -30,6 +30,12 @@ const NavbarMenu = [
     path: "/Pesanan",
     icon: <Package />,
   },
+  {
+    id: 4,
+    title: "Keranjang",
+    path: "/cart",
+    icon: <ShoppingCart size={"1.5rem"} />,
+  },
 ];
 
 const Navbar = () => {
@@ -77,7 +83,7 @@ const Navbar = () => {
         </div>
 
         <div className="max-lg:hidden">
-          <ul className="flex gap-5 ml-15 ">
+          <ul className="flex gap-11 ml-15 ">
             {NavbarMenu.map((menu) => {
               return (
                 <li key={menu.id}>
@@ -95,11 +101,11 @@ const Navbar = () => {
         <div className="max-lg:hidden">
           <div className="flex gap-3 items-center">
             <Link
-              className="flex gap-2 items-center hover:text-green-800 text-lg"
-              to={"/cart"}
+              className="flex gap-2 items-center hover:text-green-800 text-xl"
+              to={"/akun"}
             >
-              <ShoppingCart size={"1.5rem"} />
-              Keranjang
+              <UserRound size={"1.5rem"} />
+              Akun
             </Link>
           </div>
         </div>
@@ -120,7 +126,7 @@ const Navbar = () => {
               return (
                 <li key={menu.id}>
                   <Link to={menu.path} className="hover:text-green-800">
-                    <div className="text-xl flex gap-2 ">
+                    <div className="text-xl flex gap-3 ">
                       {menu.icon}
                       {menu.title}
                     </div>
@@ -134,10 +140,10 @@ const Navbar = () => {
           <div className="flex gap-13 flex-col">
             <Link
               className="flex gap-2 items-center hover:text-green-800 text-xl"
-              to={"/cart"}
+              to={"/akun"}
             >
-              <ShoppingCart size={"1.5rem"} />
-              Keranjang
+              <UserRound size={"1.5rem"} />
+              Akun
             </Link>
           </div>
         </div>
