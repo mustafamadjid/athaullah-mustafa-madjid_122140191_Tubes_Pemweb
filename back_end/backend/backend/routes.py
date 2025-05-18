@@ -25,3 +25,10 @@ def includeme(config):
                 config.add_route('hapus_produk', '/produk/{id_produk}', request_method='DELETE')
                 
                 # Routes khusus untuk foto produk
+                config.add_route('upload_foto_produk', '/produk/{id_produk}/foto', request_method='POST')
+                
+                
+                # Routes Pesanan
+                config.add_route('pesanan', '/pesanan', request_method='GET')
+                config.add_route('tambah_pesanan', '/pesanan', request_method='POST')
+                config.add_route('hapus_pesanan', '/pesanan/{id_pesanan}', request_method='DELETE')
