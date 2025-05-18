@@ -12,23 +12,10 @@ def setup_models(dbsession):
     Add or update models / fixtures in the database.
 
     """
-    # Data awal pembeli
-    pembeli1 = models.Pembeli (
-        username_pembeli='joni',
-        email_pembeli='joni@joni',
-        password_pembeli='joni123',
-        jenis_kelamin='Laki-laki',
-    )
-    pembeli2 = models.Pembeli (
-        username_pembeli='budi',
-        email_pembeli='budi@budi',
-        password_pembeli='budi123',
-        jenis_kelamin='Laki-laki',
-    )
+    models.Base.metadata.create_all(dbsession.bind)
+    dbsession.commit()
+    print('Initialized database tables')
     
-   
-    dbsession.add(pembeli1)
-    dbsession.add(pembeli2)
     
 
 def parse_args(argv):

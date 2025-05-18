@@ -9,6 +9,10 @@ body {
   font-family: var(--font-inter);
 }
 
+.shadow-hover {
+  
+}
+
 .padding-nav {
   padding: 25px 5%;
 }

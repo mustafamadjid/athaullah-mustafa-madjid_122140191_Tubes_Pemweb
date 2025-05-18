@@ -6,7 +6,7 @@ import zope.sqlalchemy
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
 from .mymodel import MyModel  # flake8: noqa
-from .scheme_tokoijo import Pembeli
+from .scheme_tokoijo import Pembeli, Penjual, Produk, Pesanan, FotoProduk
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup

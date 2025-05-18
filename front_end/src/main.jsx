@@ -25,6 +25,7 @@ import Cart from "./Pages/Cart";
 import CheckoutPage from "./Pages/Checkout";
 import PesananPage from "./Pages/Pesanan";
 import Akun from "./Pages/Akun";
+import LoginPage from "./Pages/LoginPage";
 
 // Services
 import handleCartSlice from "./Services/Slice/handleCart";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/akun",
     element:<Akun /> ,
+  },
+  {
+    path : "/login",
+    element : <LoginPage/>
   }
 ]);
 

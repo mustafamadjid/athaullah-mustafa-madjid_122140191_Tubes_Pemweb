@@ -98,7 +98,13 @@ const Navbar = () => {
             })}
           </ul>
         </div>
-        <div className="max-lg:hidden">
+        <div className="max-lg:hidden flex items-center gap-5">
+          {/* Login Button */}
+          <div className="px-6 py-2 rounded-md bg-green-800 hover:bg-green-700 cursor-pointer">
+            <Link to="/login" className="text-white font-semibold">Login</Link>
+          </div>
+          
+          {/* Akun */}
           <div className="flex gap-3 items-center">
             <Link
               className="flex gap-2 items-center hover:text-green-800 text-xl"
