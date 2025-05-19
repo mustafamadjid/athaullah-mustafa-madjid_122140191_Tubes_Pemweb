@@ -26,6 +26,8 @@ def includeme(config):
                 
                 # Routes khusus untuk foto produk
                 config.add_route('upload_foto_produk', '/produk/{id_produk}/foto', request_method='POST')
+                config.add_route('update_foto_produk', '/produk/foto/{id_foto_produk}', request_method='PUT')
+                config.add.route('hapus_foto_produk', '/produk/foto/{id_foto_produk}', request_method='DELETE') 
                 
                 
                 # Routes Pesanan

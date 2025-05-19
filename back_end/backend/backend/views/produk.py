@@ -200,6 +200,86 @@ def update_produk(request):
     except:
         return Response(db_err_msg, content_type='text/plain', status=500)
 
+# Update Data Produk (Foto)
+@view_config(route_name='update_foto_produk',request_method='POST', renderer='json')
+def update_foto_produk(request):
+    db_err_msg = 'Database Error'
+    dbsession = request.dbsession
+
+    # Ambil id_foto_produk dari URL path parameter
+    id_foto_produk = request.matchdict.get('id_foto_produk')
+    if not id_foto_produk:
+        return Response({'success': False, 'message': 'ID foto produk tidak ditemukan di URL'}, status=400)
+
+    # Cari data foto produk yang akan diupdate
+    foto_produk = dbsession.query(FotoProduk).filter_by(id_foto_produk=id_foto_produk).first()
+    if foto_produk is None:
+        return Response({'success': False, 'message': 'Data foto produk tidak ditemukan'}, status=404)
+
+    upload_dir = os.path.join(os.getcwd(), 'assets', 'uploaded_photos')
+    if not os.path.exists(upload_dir):
+        os.makedirs(upload_dir)
+
+    try:
+        upload_file = request.POST.get('foto_produk')
+        if not upload_file:
+            return Response({'success': False, 'message': 'File foto_produk tidak ditemukan'}, status=400)
+
+        filename = upload_file.filename
+        if not filename:
+            return Response({'success': False, 'message': 'File harus memiliki nama'}, status=400)
+
+        ext = filename.split('.')[-1].lower()
+        allowed_ext = ['jpg', 'jpeg', 'png', 'gif']
+        if ext not in allowed_ext:
+            return Response({'success': False, 'message': 'Format file tidak diizinkan'}, status=400)
+
+        file_sample = upload_file.file.read(2048)
+        upload_file.file.seek(0)
+        mime_type = magic.from_buffer(file_sample, mime=True)
+        allowed_mime = ['image/jpeg', 'image/png', 'image/gif']
+        if mime_type not in allowed_mime:
+            return Response({'success': False, 'message': 'Tipe file tidak diizinkan'}, status=400)
+
+       
+
+        unique_filename = f"{uuid.uuid4().hex}.{ext}"
+        file_path = os.path.join(upload_dir, unique_filename)
+
+        # Simpan file baru secara chunk
+        with open(file_path, 'wb') as output_file:
+            input_file = upload_file.file
+            while True:
+                chunk = input_file.read(65536)
+                if not chunk:
+                    break
+                output_file.write(chunk)
+
+        # Hapus file lama jika ada
+        old_file_path = os.path.join(os.getcwd(), foto_produk.foto_produk)
+        if os.path.exists(old_file_path):
+            os.remove(old_file_path)
+
+        # Update data foto_produk di database
+        foto_produk.foto_produk = os.path.join('assets', 'uploaded_photos', unique_filename)
+        
+        # Commit ke database
+        dbsession.commit()
+
+        try:
+            dbsession.flush()
+            return {'success': True, 'message': 'Data foto produk berhasil diupdate'}
+        except Exception as db_exc:
+            logger.error(f"Database error saat update foto produk: {db_exc}")
+            # Jika gagal simpan DB, hapus file yang sudah diupload
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            return Response({'success': False, 'message': db_err_msg}, status=500)
+
+    except Exception as exc:
+        logger.error(f"Error saat upload file update foto produk: {exc}")
+        return Response({'success': False, 'message': 'File gagal disimpan di server'}, status=500)
+
 
 # Hapus Data Produk
 @view_config(route_name='hapus_produk',request_method='DELETE', renderer='json')
@@ -223,5 +303,31 @@ def hapus_produk(request):
         dbsession.commit()
         
         return {'success': True, 'message': f'Data produk dengan id : {id_produk} berhasil dihapus'}
+    except:
+        return Response(db_err_msg, content_type='text/plain', status=500)
+
+# Hapus Data Produk (Foto)
+@view_config(route_name='hapus_foto_produk',request_method='DELETE', renderer='json')
+def hapus_foto_produk(request):
+    # Error message
+    db_err_msg = 'Database Error'
+    
+    dbsession = request.dbsession
+  
+    id_foto_produk = request.mathchdict['id_foto_produk']
+    
+    # Filter data foto produk
+    foto_produk = dbsession.query(FotoProduk).filter_by(id_foto_produk=id_foto_produk).first()
+    if foto_produk is None:
+        return Response('Data foto produk tidak ditemukan', status=404)
+    
+    try:
+        # Hapus data foto produk
+        dbsession.delete(foto_produk)
+        
+        # Commit ke database
+        dbsession.commit()
+        
+        return {'success': True, 'message': f'Data foto produk dengan id : {id_foto_produk} berhasil dihapus'}
     except:
         return Response(db_err_msg, content_type='text/plain', status=500)
