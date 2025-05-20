@@ -39,6 +39,21 @@ def daftar_produk(request):
         return Response(db_err_msg, content_type='text/plain', status=500)
     return {'produk': [m.to_dict() for m in produk]}
 
+# Daftar Data Produk berdasarkan produk (Foto)
+@view_config(route_name='produk_foto',request_method='GET', renderer='json')
+def daftar_produk_foto(request):
+    # Error message
+    db_err_msg = 'Database Error'
+    id_produk = request.matchdict['id_produk']
+    
+    # Mendapatkan data produk
+    try:
+        dbsession = request.dbsession
+        foto_produk = dbsession.query(FotoProduk).filter_by(id_produk=id_produk).all()
+    except:
+        return Response(db_err_msg, content_type='text/plain', status=500)
+    return {'foto_produk': [m.to_dict() for m in foto_produk]}
+
 
 # Tambah Data Produk
 @view_config(route_name='tambah_produk',request_method='POST', renderer='json')
