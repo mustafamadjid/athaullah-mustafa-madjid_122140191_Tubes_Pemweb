@@ -42,7 +42,7 @@ def tambah_penjual(request):
         json_data = request.json.body
         
         # validasi data
-        required_fields = ['username_penjual','nama_penjual' ,'email_penjual', 'jenis_kelamin', 'nomor_handphone']
+        required_fields = ['username_penjual','nama_penjual' ,'email_penjual', 'uid_penjual', 'nomor_handphone']
         for field in required_fields:
             if field not in json_data:
                 return Response(f"Field '{field}' wajib disertakan", status=400)
@@ -52,7 +52,7 @@ def tambah_penjual(request):
             username_penjual=json_data['username_penjual'],
             nama_penjual=json_data['nama_penjual'],
             email_penjual=json_data['email_penjual'],
-            jenis_kelamin=json_data['jenis_kelamin'],
+            uid_penjual=json_data['uid_penjual'],
             nomor_handphone=json_data['nomor_handphone']
         )
         request.dbsession.add(penjual)
@@ -90,8 +90,7 @@ def update_penjual(request):
             penjual.nama_penjual = json_data['nama_penjual']
         if 'email_penjual' in json_data:
             penjual.email_penjual = json_data['email_penjual']
-        if 'jenis_kelamin' in json_data:
-            penjual.jenis_kelamin = json_data['jenis_kelamin']
+      
         if 'nomor_handphone' in json_data:
             penjual.nomor_handphone = json_data['nomor_handphone']
         
@@ -110,10 +109,10 @@ def hapus_penjual(request):
     db_err_msg = 'Database Error'
     
     dbsession = request.dbsession
-    id_penjual= request.mathchdict['id_penjual']
+    uid_penjual= request.mathchdict['uid_penjual']
     
     # Filter data penjual
-    penjual= dbsession.query(Penjual).filter_by(id_penjual=id_penjual).first()
+    penjual= dbsession.query(Penjual).filter_by(uid_penjual=uid_penjual).first()
     if penjual is None:
         return Response('Data penjual tidak ditemukan', status=404)
     
@@ -124,6 +123,6 @@ def hapus_penjual(request):
         # Commit ke database
         dbsession.commit()
         
-        return {'success': True, 'message': f'Data penjual dengan id : {id_penjual} berhasil dihapus'}
+        return {'success': True, 'message': f'Data penjual dengan id : {uid_penjual} berhasil dihapus'}
     except:
         return Response(db_err_msg, content_type='text/plain', status=500)
