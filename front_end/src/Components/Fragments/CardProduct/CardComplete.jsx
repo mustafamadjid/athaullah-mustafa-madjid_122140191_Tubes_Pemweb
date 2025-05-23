@@ -93,12 +93,12 @@ const CardComplete = ({ product, onAddToCart, wrapVariant, titleVariant }) => {
 
   //
 
-  CardProduct.propTypes = {
-    product: PropTypes.object,
-    onAddToCart: PropTypes.func,
-    wrapVariant: PropTypes.string,
-    titleVariant: PropTypes.string,
-  };
+};
+CardComplete.propTypes = {
+  product: PropTypes.object,
+  onAddToCart: PropTypes.func,
+  wrapVariant: PropTypes.string,
+  titleVariant: PropTypes.string,
 };
 
 export default CardComplete;

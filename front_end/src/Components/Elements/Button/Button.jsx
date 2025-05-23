@@ -11,10 +11,12 @@ const Button = ({ variant, type = "button", children }) => {
     </button>
   );
 
-  Button.propTypes = {
-    variant: PropTypes.string,
-    type: PropTypes.string,
-    children: PropTypes.node,
-  };
+  
+};
+
+Button.propTypes = {
+  variant: PropTypes.string,
+  type: PropTypes.string,
+  children: PropTypes.node,
 };
 export default Button;

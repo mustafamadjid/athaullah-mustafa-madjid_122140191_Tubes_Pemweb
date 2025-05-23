@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Input = ({ type, placeholder, name }) => {
+const Input = ({ type, placeholder, name,variant  }) => {
   return (
     <>
       <div className="w-full mb-6">
@@ -9,17 +9,16 @@ const Input = ({ type, placeholder, name }) => {
           placeholder={placeholder}
           name={name}
           id={name}
-          className="w-full border-b-1 border-gray-300 p-3 focus:outline-none"
+          className={`${variant} w-full border-b-1 border-gray-300 p-3 focus:outline-none`}
         />
       </div>
     </>
   );
-
-  Input.propTypes = {
-    type: PropTypes.string,
-    placeholder: PropTypes.string,
-    name: PropTypes.string,
-  };
+};
+Input.propTypes = {
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default Input;

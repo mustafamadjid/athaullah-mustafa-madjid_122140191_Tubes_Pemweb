@@ -26,10 +26,14 @@ import CheckoutPage from "./Pages/Checkout";
 import PesananPage from "./Pages/Pesanan";
 import Akun from "./Pages/Akun";
 import LoginPage from "./Pages/LoginPage";
+import RegisterPage from "./Pages/Register";
 
 // Services
 import handleCartSlice from "./Services/Slice/handleCart";
 import { getTotals } from "./Services/Slice/handleCart";
+
+// Context API Authentication
+import { AuthContextProvider } from "./Services/Auth/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -55,12 +59,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/akun",
-    element:<Akun /> ,
+    element: <Akun />,
   },
   {
-    path : "/login",
-    element : <LoginPage/>
-  }
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
 ]);
 
 const store = configureStore({
@@ -72,10 +80,12 @@ const store = configureStore({
 store.dispatch(getTotals());
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>
+  <AuthContextProvider>
+    <StrictMode>
+      <Provider store={store}>
+        <ToastContainer />
+        <RouterProvider router={router} />
+      </Provider>
+    </StrictMode>
+  </AuthContextProvider>
 );

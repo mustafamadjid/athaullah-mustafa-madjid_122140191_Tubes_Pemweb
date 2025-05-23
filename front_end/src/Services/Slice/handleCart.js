@@ -1,4 +1,7 @@
+// Import Redux
 import { createSlice } from "@reduxjs/toolkit";
+
+// Import Toast
 import { toast } from "react-toastify";
 
 const handleCartSlice = createSlice({
