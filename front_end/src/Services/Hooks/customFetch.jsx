@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const useFetch = (url) => {
-  const [data, setData] = useState(null);
+  const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ const useFetch = (url) => {
           throw new Error(
             `Jaringan tidak dalam keaadan baik :  ${response.statusText}`
           );
-        setData(response.data);
+        setResponse(response.data);
       } catch (error) {
         setError(error.message);
         setData(null);
@@ -33,7 +33,7 @@ const useFetch = (url) => {
     };
   }, [url]);
 
-  return { data, error, loading };
+  return { response, error, loading };
 };
 
 export default useFetch;

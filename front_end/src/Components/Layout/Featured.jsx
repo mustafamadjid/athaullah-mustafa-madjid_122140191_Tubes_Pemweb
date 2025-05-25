@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../Services/Slice/handleCart";
 
 const FeaturedProducts = () => {
-  const { data } = useFetch("https://dummyjson.com/products");
+  const { response } = useFetch("https://dummyjson.com/products");
 
   var settings = {
     dots: false,
@@ -37,7 +37,7 @@ const FeaturedProducts = () => {
       <div className="slider-container">
         <Slider {...settings} className="">
           {/* <div className="flex  justify-center items-center gap-4"> */}
-          {data?.products.map((product) => (
+          {response?.products.map((product) => (
             <CardProduct
               key={product.id}
               product={product}

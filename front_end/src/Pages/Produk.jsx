@@ -62,7 +62,7 @@ const Produk = () => {
             All Categories
           </h1>
           <div className="flex flex-col gap-6 max-lg:overflow-scroll max-lg:gap-10">
-            {categoryData.data?.map((category) => (
+            {categoryData.response?.map((category) => (
               <h1
                 className="text-[16px] font-semibold hover:text-green-700 cursor-pointer "
                 onClick={() =>
@@ -80,7 +80,7 @@ const Produk = () => {
         {/* Product Component*/}
         <div className="max-h-screen padding-nav flex flex-col items-center gap-5 basis-3/4 overflow-auto  max-lg:basis-full">
           <div className="flex flex-row flex-wrap justify-center gap-14 items-center max-lg:w-full max-lg:flex-wrap ">
-            {productsData.data?.products.map((product) => (
+            {productsData.response?.products.map((product) => (
               <CardComplete
                 key={product.id}
                 product={product}
