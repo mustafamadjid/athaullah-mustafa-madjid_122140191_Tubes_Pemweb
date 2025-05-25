@@ -27,6 +27,9 @@ import PesananPage from "./Pages/Pesanan";
 import Akun from "./Pages/Akun";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/Register";
+import DashboardProfil from "./Pages/Dashboard/DashboardProfil";
+import DashboardTambahProduk from "./Pages/Dashboard/DashboardAddProduk";
+import DashboardLihatProduk from "./Pages/Dashboard/DashboardSeeProduk";
 
 // Services
 import handleCartSlice from "./Services/Slice/handleCart";
@@ -68,6 +71,18 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/dashboard/profil",
+    element: <DashboardProfil/>,
+  },
+  {
+    path: "/dashboard/tambahproduk",
+    element: <DashboardTambahProduk/>,
+  },
+  {
+    path: "/dashboard/lihatproduk",
+    element: <DashboardLihatProduk/>,
   },
 ]);
 

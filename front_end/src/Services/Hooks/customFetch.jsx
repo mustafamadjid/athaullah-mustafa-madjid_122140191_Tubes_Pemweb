@@ -22,7 +22,7 @@ const useFetch = (url) => {
         setError(error.message);
         setData(null);
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
 

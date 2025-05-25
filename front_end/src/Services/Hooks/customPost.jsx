@@ -14,9 +14,7 @@ const usePost = (url) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.post(url, data, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await axios.post(url, data);
       setResponse(res.data);
     } catch (err) {
       setError(err.message);
