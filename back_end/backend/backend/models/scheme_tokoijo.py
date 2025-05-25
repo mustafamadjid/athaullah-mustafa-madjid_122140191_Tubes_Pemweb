@@ -18,6 +18,8 @@ class Pembeli(Base):
     nama_pembeli = Column(Text)
     email_pembeli = Column(Text)
     nomor_handphone = Column(Text)
+    gambar_profil = Column(Text)
+    
     # Relasi ke pesanan (optional)
     pesanan = relationship('Pesanan', back_populates='pembeli')
 
@@ -28,7 +30,8 @@ class Pembeli(Base):
             'nama_pembeli': self.nama_pembeli or 'No name',
             'role': self.role or 'No role',
             'email_pembeli': self.email_pembeli or 'No email',
-            'nomor_handphone': self.nomor_handphone or 'No phone number'
+            'nomor_handphone': self.nomor_handphone or 'No phone number',
+            'gambar_profil': self.gambar_profil
         }
 
 # Tabel Data Penjual
@@ -40,6 +43,9 @@ class Penjual(Base):
     role = Column(Text)
     email_penjual = Column(Text)
     nomor_handphone = Column(Text)
+    gambar_profil = Column(Text)
+    
+    # Relasi ke produk
     produk = relationship('Produk', back_populates='penjual')
 
     def to_dict(self):
@@ -49,7 +55,8 @@ class Penjual(Base):
             'nama_penjual': self.nama_penjual or 'No name',
             'role': self.role or 'No role',
             'email_penjual': self.email_penjual or 'No email',
-            'nomor_handphone': self.nomor_handphone or 'No phone number'
+            'nomor_handphone': self.nomor_handphone or 'No phone number',
+            'gambar_profil': self.gambar_profil
         }
 
 # Tabel Data Produk

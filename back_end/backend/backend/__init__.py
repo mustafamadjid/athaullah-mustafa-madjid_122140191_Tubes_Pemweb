@@ -1,4 +1,5 @@
 from pyramid.config import Configurator
+from .middleware import cors_tween_factory
 
 
 def main(global_config, **settings):
@@ -9,4 +10,7 @@ def main(global_config, **settings):
         config.include('.models')
         config.include('.routes')
         config.scan()
+        config.add_tween('.cors_tween_factory')  
     return config.make_wsgi_app()
+
+    
