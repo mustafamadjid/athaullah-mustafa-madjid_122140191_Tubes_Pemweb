@@ -1,5 +1,5 @@
 // Import React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Import Components
 import Navbar from "../../Components/Fragments/Navbar/Navbar";
@@ -9,16 +9,88 @@ import Sidebar from "../../Components/Fragments/Sidebar/Sidebar";
 import useFetch from "../../Services/Hooks/customFetch";
 import usePut from "../../Services/Hooks/customPut";
 
+// Auth Service
+import { UserAuth } from "../../Services/Auth/AuthContext";
 
-// Import Router
-import { Link } from "react-router";
+// Import Toast
+import { toast } from "react-toastify";
+
 const DashboardProfil = () => {
-  const [username,setUsername] = useState("");
-  const [name,setName] = useState("");
-  const [email,setEmail] = useState("");
-  const [phone,setPhone] = useState("");
-  const [role,setRole] = useState("");
-  const [image,setImage] = useState("");
+  // Current User
+  const { user } = UserAuth();
+
+  // Inisialisasi state dengan string kosong agar controlled inputs
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [role, setRole] = useState("");
+  const [image, setImage] = useState("");
+  const uid_penjual = user?.uid || "";
+
+  // Fetch Hooks
+  const fetchData = useFetch(
+    `${import.meta.env.VITE_API_URL}/penjual/profil/${uid_penjual}`
+  );
+
+  // Update Hooks
+  const updateData = usePut(
+    `${import.meta.env.VITE_API_URL}/penjual/${uid_penjual}`
+  );
+
+  // Set Data From Response
+  useEffect(() => {
+    if (fetchData.response?.status === 200) {
+      setUsername(fetchData.response.data.username_penjual || "");
+      setName(fetchData.response.data.nama_penjual || "");
+      setEmail(fetchData.response.data.email_penjual || "");
+      setPhone(fetchData.response.data.nomor_handphone || "");
+      setRole(fetchData.response.data.role || "");
+      setImage(fetchData.response.data.gambar_profil || "");
+    }
+  }, [fetchData.response]);
+
+  // Submit Update Data
+  const handleUpdateData = (e) => {
+    e.preventDefault();
+
+    updateData.putData({
+      username_penjual: username,
+      nama_penjual: name,
+      email_penjual: email,
+      nomor_handphone: phone,
+    });
+  };
+
+  // Memantau Response Dari Update Data
+  useEffect(() => {
+    if (!updateData.response) return;
+    if (updateData.response?.status === 200) {
+      toast.success("Data Berhasil Diubah", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      toast.error("Data Gagal Diubah", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      console.log(updateData.response);
+    }
+  }, [updateData.response]);
 
   return (
     <>
@@ -45,15 +117,17 @@ const DashboardProfil = () => {
             {/* Image */}
             <div className="flex flex-col gap-2 items-center mb-6">
               <img
-                src={image}
+                src={image || null}
                 alt="Profile"
                 className="w-[120px] h-[120px] rounded-full object-cover border-4 border-green-700"
               />
-              
             </div>
 
             {/* Form */}
-            <form className="w-full flex flex-col gap-5">
+            <form
+              className="w-full flex flex-col gap-5"
+              onSubmit={handleUpdateData}
+            >
               {/* Role */}
               <div className="flex flex-col">
                 <label
@@ -67,7 +141,6 @@ const DashboardProfil = () => {
                   id="role"
                   placeholder="Role"
                   value={role}
-                  onChange={(e) => setRole(e.target.value)}
                   readOnly
                   className="border border-green-700 rounded-lg px-3 py-2 bg-green-50 text-green-900 font-semibold"
                 />
@@ -140,8 +213,11 @@ const DashboardProfil = () => {
                   className="border border-green-700 rounded-lg px-3 py-2 focus:outline-green-800 focus:border-green-800"
                 />
               </div>
-              {/* (Optional: Tombol Simpan/Update) */}
-              <button type="submit" className="cursor-pointer w-full py-2 bg-green-800 hover:bg-green-900 text-white font-semibold rounded-xl mt-2 shadow transition duration-150">
+              {/* Tombol Simpan/Update */}
+              <button
+                type="submit"
+                className="cursor-pointer w-full py-2 bg-green-800 hover:bg-green-900 text-white font-semibold rounded-xl mt-2 shadow transition duration-150"
+              >
                 Simpan Perubahan
               </button>
             </form>

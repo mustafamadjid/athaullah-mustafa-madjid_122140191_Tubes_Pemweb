@@ -14,9 +14,7 @@ const usePut = (url) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.put(url, data, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await axios.put(url, data);
       setResponse(res.data);
     } catch (err) {
       setError(err.message);

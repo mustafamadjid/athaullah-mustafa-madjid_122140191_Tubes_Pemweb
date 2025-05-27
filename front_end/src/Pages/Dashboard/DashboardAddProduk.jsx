@@ -5,19 +5,23 @@ import { useState,useEffect } from "react";
 import Navbar from "../../Components/Fragments/Navbar/Navbar";
 import Sidebar from "../../Components/Fragments/Sidebar/Sidebar";
 
-// Import Router
-import { Link } from "react-router";
+// Import Auth
+import { UserAuth } from "../../Services/Auth/AuthContext";
 
 // Import Custom Hooks
 import usePost from "../../Services/Hooks/customPost";
 import { toast } from "react-toastify";
+import Footer from "../../Components/Fragments/Footer/FooterFragment";
 
 const DashboardTambahProduk = () => {
+  // Current User
+  const { user } = UserAuth();
+
   const [namaProduk, setNamaProduk] = useState("");
   const [kategoriProduk, setKategoriProduk] = useState("");
   const [deskripsiProduk, setDeskripsiProduk] = useState("");
   const [merkProduk, setMerkProduk] = useState("");
-  const [hargaProduk, setHargaProduk] = useState(0);
+  const [hargaProduk, setHargaProduk] = useState("");
   const [stokProduk, setStokProduk] = useState(0);
 
   const [gambarProduk, setGambarProduk] = useState(null);
@@ -26,11 +30,16 @@ const DashboardTambahProduk = () => {
   // endpoint produk
   const produkUrl = `${import.meta.env.VITE_API_URL}/produk`;
 
-  // endpoint foto dinamis
-  const [fotoUrl, setFotoUrl] = useState(null);
+
+
+  // State validasi foto harus diupload
+  const [fotoUrl, setFotoUrl] = useState("");
   const [shouldUploadFoto, setShouldUploadFoto] = useState(false);
 
-  const { response, error, loading, postData } = usePost();
+  // Post Hook
+  const produkPost = usePost(produkUrl);
+  const fotoPost = usePost(fotoUrl);
+  
 
   // Dummy kategori
   const kategoriList = [
@@ -40,7 +49,32 @@ const DashboardTambahProduk = () => {
     "Kesehatan",
     "Olahraga",
     "Rumah Tangga",
+    "Tanaman",
   ];
+
+  // Format harga ---
+  const formatRupiah = (angkaString) => {
+    if (angkaString === "" || angkaString === null) return "";
+    const number = Number(angkaString);
+    if (isNaN(number)) return "";
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(number);
+  };
+
+  const parseRupiah = (stringRupiah) => {
+    if (!stringRupiah) return "";
+    return stringRupiah.replace(/[^0-9]/g, "");
+  };
+
+  const handleHargaChange = (e) => {
+    const nilaiInput = e.target.value;
+    const nilaiAngkaString = parseRupiah(nilaiInput);
+    setHargaProduk(nilaiAngkaString);
+  };
 
   // Handle Perubahan Gambar
   const handleImageChange = (e) => {
@@ -55,85 +89,101 @@ const DashboardTambahProduk = () => {
     }
   };
 
-  // Submit produk (tanpa gambar)
+  // Submit produk
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
+      uid_penjual: user.uid,
       nama_produk: namaProduk,
       kategori_produk: kategoriProduk,
       deskripsi_produk: deskripsiProduk,
       merk_produk: merkProduk,
-      harga_produk: hargaProduk,
-      stok_produk: stokProduk,
+      harga_produk: Number(hargaProduk) || 0,
+      stok_produk: Number(stokProduk) || 0,
     };
 
-    postData(produkUrl, data);
+    
+    produkPost.postData(data);
+    
   };
 
-  // Upload Foto Setelah Produk Tersimpan
+  // Validasi produk telah tersimpan lebih dahulu
   useEffect(() => {
-    if (response && response.status === 200) {
+    if (produkPost.response && produkPost.response.status === 200) {
       toast.success("Produk berhasil ditambahkan!", {
         position: "top-right",
         autoClose: 2000,
       });
 
-      // Ambil id_produk dari response
-      const id_produk = response.data?.id_produk || response.data?.data?.id_produk;
+      const res = produkPost.response;
+      const id_produk = res?.data?.id_produk || res?.data?.data?.id_produk;
 
       if (id_produk && gambarProduk) {
-        setFotoUrl(`${import.meta.env.VITE_API_URL}/produk/${id_produk}/foto`);
         setShouldUploadFoto(true);
+        setFotoUrl(`${import.meta.env.VITE_API_URL}/produk/${id_produk}/foto`);
       }
-    } else if (response && response.status !== 200) {
-      toast.error("Produk gagal ditambahkan!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+    } else if (produkPost.response) {
+      toast.error(
+        produkPost.response.data?.message || "Produk gagal ditambahkan!",
+        {
+          position: "top-right",
+          autoClose: 2000,
+        }
+      );
     }
-    
-  }, [response]);
+  }, [produkPost.response, gambarProduk, fotoUrl]);
 
+  // Memulai upload foto
   useEffect(() => {
-    if (shouldUploadFoto && fotoUrl && gambarProduk) {
+    console.log(fotoUrl);
+    if (shouldUploadFoto && gambarProduk) {
       const formData = new FormData();
-      formData.append("gambar_produk", gambarProduk);
+      formData.append("foto_produk", gambarProduk);
 
-      // Gunakan hook yang sama
-      postData(fotoUrl, formData);
+      fotoPost.postData(formData);
 
-      setShouldUploadFoto(false); // supaya tidak infinite loop
+      setShouldUploadFoto(false);
     }
-    
-  }, [shouldUploadFoto, fotoUrl, gambarProduk]);
+  }, [shouldUploadFoto, fotoUrl ,gambarProduk, fotoPost.postData]);
 
-  // Notifikasi upload foto 
+  // Notifikasi upload foto
   useEffect(() => {
-    if (fotoUrl && response && response.status === 200) {
-      toast.success("Foto Produk berhasil ditambahkan!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
-    } else if (fotoUrl && response && response.status !== 200) {
-      toast.error("Foto Produk gagal ditambahkan!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+    console.log(fotoPost.response);
+    if (
+      fotoPost.response 
+    ) {
+      if (fotoPost.response.status === 200) {
+        toast.success(
+          fotoPost.response.data?.message || "Foto Produk berhasil ditambahkan!",
+          {
+            position: "top-right",
+            autoClose: 2000,
+          }
+        );
+      } else {
+
+        toast.error(
+          fotoPost.response.data?.message,
+          {
+            position: "top-right",
+            autoClose: 2000,
+          }
+        );
+      }
     }
-    
-  }, [fotoUrl, response]);
+  }, [fotoPost.response]);
 
   return (
     <>
       <Navbar />
       <div className="flex gap-10 min-h-screen bg-green-50">
         <Sidebar addProdukVariant="font-bold" />
-        <div className="flex-1 flex justify-center items-start mt-35">
+        <div className="flex-1 flex justify-center items-start mt-35 mb-10">
+          {" "}
           <form
             className="w-[480px] bg-white rounded-2xl shadow-lg p-8"
             onSubmit={handleSubmit}
-            encType="multipart/form-data"
           >
             <h2 className="text-2xl font-bold mb-7 text-center text-green-900">
               Tambah Produk Baru
@@ -160,12 +210,11 @@ const DashboardTambahProduk = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 className="w-full text-sm text-green-900 file:mr-4 file:py-2 file:px-4
-                    file:rounded-lg file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-green-800 file:text-white
-                    hover:file:bg-green-900
-                    "
-                required
+                 file:rounded-lg file:border-0
+                 file:text-sm file:font-semibold
+                 file:bg-green-800 file:text-white
+                 hover:file:bg-green-900
+                 "
               />
             </div>
 
@@ -255,16 +304,15 @@ const DashboardTambahProduk = () => {
                 htmlFor="harga_produk"
                 className="block mb-1 font-medium text-green-900"
               >
-                Harga Produk (Rp)
+                Harga Produk
               </label>
               <input
-                type="number"
+                type="text" // Ubah ke type="text"
                 id="harga_produk"
-                value={hargaProduk}
-                onChange={(e) => setHargaProduk(Number(e.target.value))}
+                value={formatRupiah(hargaProduk)}
+                onChange={handleHargaChange}
                 className="w-full border border-green-700 rounded-lg px-3 py-2 focus:outline-green-800 focus:border-green-800"
-                min="0"
-                placeholder="Harga produk"
+                placeholder="Rp 0"
                 required
               />
             </div>
@@ -280,10 +328,14 @@ const DashboardTambahProduk = () => {
               <input
                 type="number"
                 id="stok_produk"
-                value={stokProduk}
-                onChange={(e) => setStokProduk(Number(e.target.value))}
-                className="w-full border border-green-700 rounded-lg px-3 py-2 focus:outline-green-800 focus:border-green-800"
                 min="0"
+                value={stokProduk}
+                onChange={(e) =>
+                  setStokProduk(
+                    Number(e.target.value) < 0 ? 0 : Number(e.target.value)
+                  )
+                }
+                className="w-full border border-green-700 rounded-lg px-3 py-2 focus:outline-green-800 focus:border-green-800"
                 placeholder="Jumlah stok"
                 required
               />
@@ -291,12 +343,11 @@ const DashboardTambahProduk = () => {
 
             <button
               type="submit"
-              className="w-full py-3 bg-green-800 hover:bg-green-900 text-white font-semibold rounded-xl shadow transition duration-150"
-              disabled={loading}
+              className="cursor-pointer w-full py-3 bg-green-800 hover:bg-green-900 text-white font-semibold rounded-xl shadow transition duration-150"
+              disabled={fotoPost.loading}
             >
-              {loading ? "Menyimpan..." : "Tambah Produk"}
+              {fotoPost.loading ? "Menyimpan..." : "Tambah Produk"}
             </button>
-
           </form>
         </div>
       </div>

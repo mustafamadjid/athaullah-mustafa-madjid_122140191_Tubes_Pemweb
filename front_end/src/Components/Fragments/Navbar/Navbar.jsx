@@ -1,8 +1,11 @@
 // Import React
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 // Import Link router
 import { Link } from "react-router";
+
+// Import navigate
+import { useNavigate } from "react-router";
 
 // Lucide Icon
 import {
@@ -49,24 +52,37 @@ const NavbarMenu = [
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   // User Auth Context
   const { user, logOut } = UserAuth();
+
+  // Get local storage
+  const roleCheck = localStorage.getItem("role");
 
   // Handle Sign Out
   const handleSignOut = async () => {
     try {
       await logOut();
+      localStorage.clear();
       toast.success("Anda Telah Berhasil Logout", {
         position: "top-right",
         autoClose: 2000,
       });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
+
+ 
+
+
   const [scroll, setScroll] = useState(false);
   const [open, setOpen] = useState(true);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -127,24 +143,44 @@ const Navbar = () => {
         <div className="max-lg:hidden flex items-center gap-5">
           {/* Statement to check if user logged in */}
           {user?.uid ? (
-            <>
-              <button
-                onClick={handleSignOut}
-                className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
-              >
-                Logout
-              </button>
-
-              <div className="flex gap-3 items-center">
-                <Link
-                  className="flex gap-2 items-center hover:text-green-800 text-xl"
-                  to={"/akun"}
+            roleCheck === "Pembeli" ? (
+              <>
+                <button
+                  onClick={handleSignOut}
+                  className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
                 >
-                  <UserRound size={"1.5rem"} />
-                  Akun
-                </Link>
-              </div>
-            </>
+                  Logout
+                </button>
+
+                <div className="flex gap-3 items-center">
+                  <Link
+                    className="flex gap-2 items-center hover:text-green-800 text-xl"
+                    to={"/akun"}
+                  >
+                    <UserRound size={"1.5rem"} />
+                    Akun
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleSignOut}
+                  className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
+                >
+                  Logout
+                </button>
+                <div className="flex gap-3 items-center">
+                  <Link
+                    className="flex gap-2 items-center hover:text-green-800 text-xl"
+                    to={"/dashboard/profil"}
+                  >
+                    <UserRound size={"1.5rem"} />
+                    Dashboard
+                  </Link>
+                </div>
+              </>
+            )
           ) : (
             <div className="px-6 py-2 rounded-md bg-green-800 hover:bg-green-700 cursor-pointer">
               <Link to="/login" className="text-white font-semibold">
@@ -182,25 +218,46 @@ const Navbar = () => {
         </div>
         <div className="">
           {/* Statement to check if user logged in */}
+          {/* Statement to check if user logged in */}
           {user?.uid ? (
-            <>
-              <button
-                onClick={handleSignOut}
-                className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
-              >
-                Logout
-              </button>
-
-              <div className="flex gap-3 items-center">
-                <Link
-                  className="flex gap-2 items-center hover:text-green-800 text-xl"
-                  to={"/akun"}
+            roleCheck === "Pembeli" ? (
+              <>
+                <button
+                  onClick={handleSignOut}
+                  className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
                 >
-                  <UserRound size={"1.5rem"} />
-                  Akun
-                </Link>
-              </div>
-            </>
+                  Logout
+                </button>
+
+                <div className="flex gap-3 items-center">
+                  <Link
+                    className="flex gap-2 items-center hover:text-green-800 text-xl"
+                    to={"/akun"}
+                  >
+                    <UserRound size={"1.5rem"} />
+                    Akun
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={handleSignOut}
+                  className="px-6 py-2 rounded-md bg-red-600 hover:bg-red-700 cursor-pointer text-white font-semibold"
+                >
+                  Logout
+                </button>
+                <div className="flex gap-3 items-center">
+                  <Link
+                    className="flex gap-2 items-center hover:text-green-800 text-xl"
+                    to={"/dashboard/profil"}
+                  >
+                    <UserRound size={"1.5rem"} />
+                    Dashboard
+                  </Link>
+                </div>
+              </>
+            )
           ) : (
             <div className="px-6 py-2 rounded-md bg-green-800 hover:bg-green-700 cursor-pointer">
               <Link to="/login" className="text-white font-semibold">

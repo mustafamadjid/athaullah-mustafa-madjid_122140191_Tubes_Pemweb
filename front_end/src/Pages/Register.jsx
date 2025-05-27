@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router"; // Pastikan pakai 'react-router-dom'!
+import { Link, useNavigate } from "react-router"; // Pastikan pakai 'react-router-dom'!
 import usePost from "../Services/Hooks/customPost";
 import { UserAuth } from "../Services/Auth/AuthContext";
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ const RegisterPage = () => {
   const [showNext, setShowNext] = useState(false);
 
   // State untuk input form
-  const [role, setRole] = useState("Pembeli"); 
+  const [role, setRole] = useState("Pembeli");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -22,6 +22,11 @@ const RegisterPage = () => {
   );
   const { user } = UserAuth();
   const navigate = useNavigate();
+
+  // Handle Role Change
+  const handleRoleChange = (value) => {
+    setRole(value);
+  };
 
   // Handle submit form
   const handleSubmit = (e) => {
@@ -54,13 +59,15 @@ const RegisterPage = () => {
 
   // Memantau perubahan response
   useEffect(() => {
+    
     if (!response) return;
     if (response.status === 200) {
+      console.log(`response: ${response}`);
       toast.success(response.message, {
         position: "top-right",
         autoClose: 2000,
       });
-      if (role === "Pembeli"){
+      if (role === "Pembeli") {
         localStorage.setItem("role", "Pembeli");
         localStorage.setItem("uid", user.uid);
         setTimeout(() => navigate("/"), 2000);
@@ -68,14 +75,23 @@ const RegisterPage = () => {
         localStorage.setItem("role", "Penjual");
         localStorage.setItem("uid", user.uid);
         setTimeout(() => navigate("/dashboard/profil"), 2000);
-      };
-      
-    } else {
+      }
+    }else if (response.status === 400) {
+      console.log(`response: ${response}`);
       toast.error(response.message || "Gagal daftar!", {
         position: "top-right",
         autoClose: 2000,
       });
+    } else {
+      console.log(`response: ${response}`);
+      toast.error(response.message || "Gagal daftar!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+      navigate("/");
     }
+    
+    
   }, [response, navigate]);
 
   return (
@@ -144,9 +160,9 @@ const RegisterPage = () => {
             <select
               id="role"
               name="role"
-              className="border border-gray-300 rounded-md px-2 py-3 w-[500px] font-inter cursor-pointer"
               value={role}
-              onChange={(e) => setRole(e.target.value)}
+              className="border border-gray-300 rounded-md px-2 py-3 w-[500px] font-inter cursor-pointer"
+              onChange={(e) => handleRoleChange(e.target.value)}
               required
             >
               <option value="Pembeli">Pembeli</option>

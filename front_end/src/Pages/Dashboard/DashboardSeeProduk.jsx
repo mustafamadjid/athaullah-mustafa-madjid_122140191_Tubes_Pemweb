@@ -11,10 +11,16 @@ const DashboardLihatProduk = () => {
       {/* Navbar */}
       <Navbar />
 
-      {/* Sidebar */}
-      <Sidebar
-        lihatProdukVariant="font-bold"
-      />
+      {/* Main Content */}
+      <div className="min-h-screen bg-green-50 flex gap-10">
+        {/* Sidebar */}
+        <Sidebar lihatProdukVariant="font-bold" />
+
+        {/* List Produk */}
+        <div className="mt-27 w-4/5 flex justify-center">
+          <h1 className="font-bold text-3xl">Produk yang anda jual</h1>
+        </div>
+      </div>
     </>
   );
 };

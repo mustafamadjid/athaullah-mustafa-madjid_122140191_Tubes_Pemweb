@@ -31,6 +31,10 @@ import DashboardProfil from "./Pages/Dashboard/DashboardProfil";
 import DashboardTambahProduk from "./Pages/Dashboard/DashboardAddProduk";
 import DashboardLihatProduk from "./Pages/Dashboard/DashboardSeeProduk";
 
+// Protected Route
+import ProtectedRouteLogin from "./Services/ProtectedRoute/ProtectedRouteLogin";
+import ProtectedRoutePenjual from "./Services/ProtectedRoute/ProtectedRoutePenjual";
+import ProtectedRouteLoggedIn from "./Services/ProtectedRoute/ProtectedRouteLoggedIn";
 // Services
 import handleCartSlice from "./Services/Slice/handleCart";
 import { getTotals } from "./Services/Slice/handleCart";
@@ -50,23 +54,43 @@ const router = createBrowserRouter([
 
   {
     path: "/cart",
-    element: <Cart />,
+    element: (
+      <ProtectedRouteLogin>
+        <Cart />
+      </ProtectedRouteLogin>
+    ),
   },
   {
     path: "/checkout",
-    element: <CheckoutPage />,
+    element: (
+      <ProtectedRouteLogin>
+        <CheckoutPage />
+      </ProtectedRouteLogin>
+    ),
   },
   {
     path: "/pesanan",
-    element: <PesananPage />,
+    element: (
+      <ProtectedRouteLogin>
+        <PesananPage />
+      </ProtectedRouteLogin>
+    ),
   },
   {
     path: "/akun",
-    element: <Akun />,
+    element: (
+      <ProtectedRouteLogin>
+        <Akun />
+      </ProtectedRouteLogin>
+    ),
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <ProtectedRouteLoggedIn>
+        <RegisterPage />
+      </ProtectedRouteLoggedIn>
+    ),
   },
   {
     path: "/login",
@@ -74,15 +98,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard/profil",
-    element: <DashboardProfil/>,
+    element: (
+      <ProtectedRoutePenjual>
+        <DashboardProfil />
+      </ProtectedRoutePenjual>
+    ),
   },
   {
     path: "/dashboard/tambahproduk",
-    element: <DashboardTambahProduk/>,
+    element: (
+      <ProtectedRoutePenjual>
+        <DashboardTambahProduk />
+      </ProtectedRoutePenjual>
+    ),
   },
   {
     path: "/dashboard/lihatproduk",
-    element: <DashboardLihatProduk/>,
+    element: (
+      <ProtectedRoutePenjual>
+        <DashboardLihatProduk />
+      </ProtectedRoutePenjual>
+    ),
   },
 ]);
 
