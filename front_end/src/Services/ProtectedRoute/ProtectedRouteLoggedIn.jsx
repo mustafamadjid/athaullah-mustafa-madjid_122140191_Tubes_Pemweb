@@ -8,7 +8,7 @@ const ProtectedRouteLoggedIn = ({ children }) => {
     const navigate = useNavigate();
     useEffect(() => {
       if (getRole && getUid) {
-        navigate("/s");
+        navigate("/");
       }
     }, [getRole, getUid, navigate]);
 
