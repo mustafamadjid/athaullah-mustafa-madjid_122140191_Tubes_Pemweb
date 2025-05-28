@@ -33,6 +33,8 @@ const CheckoutPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+
+  
   const [alamat, setAlamat] = useState("");
   const [kota, setKota] = useState("");
   const [kodePos, setKodePos] = useState("");
@@ -58,9 +60,6 @@ const CheckoutPage = () => {
       setName(pembeliFetch.response.data.nama_pembeli || "");
       setEmail(pembeliFetch.response.data.email_pembeli || "");
       setPhone(pembeliFetch.response.data.nomor_handphone || "");
-      setAlamat(pembeliFetch.response.data.alamat || "");
-      setKota(pembeliFetch.response.data.kota || "");
-      setKodePos(pembeliFetch.response.data.kode_pos || "");
     }
   }, [pembeliFetch.response, pembeliFetch.response?.data]);
 

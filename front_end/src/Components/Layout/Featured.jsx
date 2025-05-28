@@ -1,9 +1,16 @@
+// Import React
+import { useState, useEffect } from "react";
+
+// Import Components
 import CardProduct from "../Fragments/CardProduct/CardProduct";
 
+// Import Slider
 import Slider from "react-slick";
 
+// Import Hooks
 import useFetch from "../../Services/Hooks/customFetch";
 
+// Import Redux
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../Services/Slice/handleCart";
 

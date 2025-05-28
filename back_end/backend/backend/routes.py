@@ -42,3 +42,4 @@ def includeme(config):
                 config.add_route('pesanan', '/pesanan', request_method='GET')
                 config.add_route('tambah_pesanan', '/pesanan', request_method='POST')
                 config.add_route('hapus_pesanan', '/pesanan/{id_pesanan}', request_method='DELETE')
+                config.add_route('pesanan_by_id', '/pesanan/pembeli/{uid_pembeli}', request_method='GET')

@@ -36,6 +36,27 @@ def daftar_pesanan(request):
             'message': 'Database Error'
         })
 
+#Daftar data pesanan by uid pembeli
+@view_config(route_name='pesanan_by_id', renderer='json')
+def daftar_pesanan_by_id(request):
+    uid_pembeli = request.matchdict['uid_pembeli']
+    try:
+        dbsession = request.dbsession
+        pesanan = dbsession.query(Pesanan).filter_by(uid_pembeli=uid_pembeli).all()
+        return json_response({
+            'status': 200,
+            'success': True,
+            'message': f"Daftar pesanan dengan uid {uid_pembeli} berhasil diambil",
+            'data': [m.to_dict() for m in pesanan]
+        })
+    except Exception as e:
+        logger.exception(e)
+        return json_response({
+            'status': 500,
+            'success': False,
+            'message': 'Database Error'
+        })
+
 # Tambah Data Pesanan
 @view_config(route_name='tambah_pesanan', request_method='POST', renderer='json')
 def tambah_pesanan(request):
@@ -50,7 +71,7 @@ def tambah_pesanan(request):
                     'status': 400,
                     'success': False,
                     'message': f"Field '{field}' wajib disertakan"
-                }, status=400)
+                })
 
         pesanan = Pesanan(
             uid_pembeli=json_data['uid_pembeli'],

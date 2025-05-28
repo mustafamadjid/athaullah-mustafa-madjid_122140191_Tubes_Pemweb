@@ -46,7 +46,6 @@ Instruksi di bawah ini berguna jika anda ingin melakukan copy terhadap aplikasi 
 ### Dependensi Paket (Library) yang digunakan dalam aplikasi
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-
 - Redux JS Toolkit
 - React-Redux
 - React-Router
@@ -55,19 +54,16 @@ Instruksi di bawah ini berguna jika anda ingin melakukan copy terhadap aplikasi 
 
 
 ![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=for-the-badge)
-
 - Tailwind CSS
 
 
 
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=Firebase&logoColor=white&style=for-the-badge)
-
 - Firebase
 
 
 
 ![Material](https://img.shields.io/badge/Material-0081CB?style=for-the-badge&logo=material&logoColor=white)
-
 - Lucide Icon React
 - React Slick
 - React Toastify

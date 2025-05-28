@@ -125,7 +125,7 @@ const Navbar = () => {
         </div>
 
         <div className="max-lg:hidden">
-          <ul className="flex gap-11 ml-15 ">
+          <ul className=" flex sm:gap-3  xl:gap-11 ml-15 ">
             {NavbarMenu.map((menu) => {
               return (
                 <li key={menu.id}>
@@ -141,7 +141,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="max-lg:hidden flex items-center gap-5">
-          {/* Statement to check if user logged in */}
+          {/* Cek apakah user sudah login*/}
           {user?.uid ? (
             roleCheck === "Pembeli" ? (
               <>

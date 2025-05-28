@@ -41,6 +41,7 @@ const DashboardProfil = () => {
   // Set Data From Response
   useEffect(() => {
     if (fetchData.response?.status === 200) {
+      
       setUsername(fetchData.response.data.username_penjual || "");
       setName(fetchData.response.data.nama_penjual || "");
       setEmail(fetchData.response.data.email_penjual || "");
@@ -118,7 +119,10 @@ const DashboardProfil = () => {
             {/* Image */}
             <div className="flex flex-col gap-2 items-center mb-6">
               <img
-                src={image}
+                src={
+                  image? image :
+                  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fno-image-available&psig=AOvVaw1n1cozLRZDWDKJWzBxChjG&ust=1748483291995000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLiW5v2FxY0DFQAAAAAdAAAAABAE"
+                }
                 alt="Profile"
                 className="w-[120px] h-[120px] rounded-full object-cover border-4 border-green-700"
               />
@@ -141,7 +145,7 @@ const DashboardProfil = () => {
                   type="text"
                   id="role"
                   placeholder="Role"
-                  value={role}
+                  value={role || "Penjual"}
                   readOnly
                   className="border border-green-700 rounded-lg px-3 py-2 bg-green-50 text-green-900 font-semibold"
                 />

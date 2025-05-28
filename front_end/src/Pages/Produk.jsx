@@ -20,8 +20,8 @@ import { addToCart } from "../Services/Slice/handleCart";
 import { List, X } from "lucide-react";
 
 const Produk = () => {
-  // State untuk endpoint produk
-  const [url, setUrl] = useState(`${import.meta.env.VITE_API_URL}/produk`);
+  // endpoint produk
+  const url = `${import.meta.env.VITE_API_URL}/produk`
 
   // State open
   const [open, isOpen] = useState(true);
