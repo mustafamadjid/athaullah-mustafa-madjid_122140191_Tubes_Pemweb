@@ -22,8 +22,8 @@
 
 ## 📝 Table of Contents
 
-- [About](#about)
-- [Getting Started](#getting_started)
+- [Tentang Aplikasi Web](#about)
+- [Memulai Aplikasi](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
@@ -32,61 +32,73 @@
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
-## 🧐 About <a name = "about"></a>
+## 🧐 TokoIjo <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+##  Deskripsi Aplikasi  <a name = "about"></a>
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+TokoIjo merupakan aplikasi e-commerce berbasis website yang dibangun untuk memudahkan pengguna dalam berbelanja secara daring. Aplikasi ini memiliki fitur-fitur yang umum dalam sebuah aplikasi e-commerce seperti pilihan produk berdasarkan kategori, menambahkan produk baru untuk dijual, pilihan metode pembayaran, dan berbagai fitur lainnnya.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
-### Prerequisites
+## 🏁 Memulai <a name = "getting_started"></a>
 
-What things you need to install the software and how to install them.
+Instruksi di bawah ini berguna jika anda ingin melakukan copy terhadap aplikasi web ini agar dapat dijalankan secara lokal di komputer anda.
 
-```
-Give examples
-```
+### Dependensi Paket (Library) yang digunakan dalam aplikasi
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+- Redux JS Toolkit
+- React-Redux
+- React-Router
+- Axios
+
+![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=for-the-badge)
+
+- Tailwind CSS
+
+  ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=Firebase&logoColor=white&style=for-the-badge)
+
+- Firebase
+
+![Material](https://img.shields.io/badge/Material-0081CB?style=for-the-badge&logo=material&logoColor=white)
+
+- Lucide Icon React
+- React Slick
+- React Toastify
+- Framer Motion
+- Slick Carousel
+- React Google Button
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
+Tahapan Menginstall proyek aplikasi web ini.
 
-Say what the step will be
-
+Clone repository dari link ini ke folder anda
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+git clone https://github.com/mustafamadjid/athaullah-mustafa-madjid_122140191_Tubes_Pemweb.git
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Pastikan anda telah menginstall node js terlebih dahulu. Jika sudah, akses folder melalui terminal anda. Contohnya 
 
 ```
-Give an example
+D:\Root\Website\TokoIjo
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+kemudian install semua dependency melalui perintah ini
 
 ```
-Give an example
+npm install
 ```
 
-## 🎈 Usage <a name="usage"></a>
+Jalankan aplikasi dengan perintah 
+
+```
+npm run dev
+```
+
+
+
+## 🎈 Fitur-Fitur Dalam Aplikasi <a name="usage"></a>
 
 Add notes about how to use the system.
 
