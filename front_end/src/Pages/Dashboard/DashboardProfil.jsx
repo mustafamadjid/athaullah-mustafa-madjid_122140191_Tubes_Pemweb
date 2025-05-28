@@ -19,14 +19,14 @@ const DashboardProfil = () => {
   // Current User
   const { user } = UserAuth();
 
-  // Inisialisasi state dengan string kosong agar controlled inputs
+  // Inisialisasi state 
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
   const [image, setImage] = useState("");
-  const uid_penjual = user?.uid || "";
+  const uid_penjual = user?.uid
 
   // Fetch Hooks
   const fetchData = useFetch(
@@ -46,8 +46,9 @@ const DashboardProfil = () => {
       setEmail(fetchData.response.data.email_penjual || "");
       setPhone(fetchData.response.data.nomor_handphone || "");
       setRole(fetchData.response.data.role || "");
-      setImage(fetchData.response.data.gambar_profil || "");
+      setImage(fetchData.response.data.gambar_profil);
     }
+    
   }, [fetchData.response]);
 
   // Submit Update Data
@@ -117,7 +118,7 @@ const DashboardProfil = () => {
             {/* Image */}
             <div className="flex flex-col gap-2 items-center mb-6">
               <img
-                src={image || null}
+                src={image}
                 alt="Profile"
                 className="w-[120px] h-[120px] rounded-full object-cover border-4 border-green-700"
               />

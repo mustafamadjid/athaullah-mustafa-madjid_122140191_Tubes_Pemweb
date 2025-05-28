@@ -30,6 +30,7 @@ import RegisterPage from "./Pages/Register";
 import DashboardProfil from "./Pages/Dashboard/DashboardProfil";
 import DashboardTambahProduk from "./Pages/Dashboard/DashboardAddProduk";
 import DashboardLihatProduk from "./Pages/Dashboard/DashboardSeeProduk";
+import DashboardEditProduk from "./Pages/Dashboard/DashboardEditProduk";
 
 // Protected Route
 import ProtectedRouteLogin from "./Services/ProtectedRoute/ProtectedRouteLogin";
@@ -117,6 +118,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoutePenjual>
         <DashboardLihatProduk />
+      </ProtectedRoutePenjual>
+    ),
+  },
+  {
+    path: "/dashboard/editproduk/:id_produk",
+    element: (
+      <ProtectedRoutePenjual>
+        <DashboardEditProduk />
       </ProtectedRoutePenjual>
     ),
   },

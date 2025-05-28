@@ -9,9 +9,9 @@ const Sidebar = ({profilVariant,addProdukVariant,lihatProdukVariant}) => {
     return (
       <>
         {/* Wrapper */}
-        <div className="flex  py-[105px] h-screen ">
+        <div className="flex py-[105px] h-screen ">
           {/* Sidebar */}
-          <div className="bg-green-800 h-[91vh] flex flex-col gap-20 px-12 py-10 rounded-r-lg text-white">
+          <div className="bg-green-800 h-screen flex flex-col gap-20 px-12 py-10 rounded-r-lg text-white">
             <h1 className="font-bold text-3xl flex gap-3 items-center">
               <LayoutDashboard />
               Dashboard

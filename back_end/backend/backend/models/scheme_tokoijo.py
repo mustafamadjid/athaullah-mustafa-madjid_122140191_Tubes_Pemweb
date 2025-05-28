@@ -21,7 +21,7 @@ class Pembeli(Base):
     gambar_profil = Column(Text)
     
     # Relasi ke pesanan (optional)
-    pesanan = relationship('Pesanan', back_populates='pembeli')
+    pesanan = relationship('Pesanan', back_populates='pembeli',cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -46,7 +46,7 @@ class Penjual(Base):
     gambar_profil = Column(Text)
     
     # Relasi ke produk
-    produk = relationship('Produk', back_populates='penjual')
+    produk = relationship('Produk', back_populates='penjual',cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -69,10 +69,10 @@ class Produk(Base):
     merk_produk = Column(Text)
     harga_produk = Column(Numeric)
     stok_produk = Column(Integer)
-    uid_penjual = Column(Text, ForeignKey('penjual.uid_penjual'))  # FIXED: foreign key
+    uid_penjual = Column(Text, ForeignKey('penjual.uid_penjual',ondelete='CASCADE'))  
 
     penjual = relationship('Penjual', back_populates='produk')
-    foto = relationship('FotoProduk', back_populates='produk')
+    foto = relationship('FotoProduk', back_populates='produk',cascade='all, delete-orphan')
     pesanan = relationship('Pesanan', back_populates='produk')
 
     def to_dict(self):
@@ -82,8 +82,8 @@ class Produk(Base):
             'kategori_produk': self.kategori_produk,
             'deskripsi_produk': self.deskripsi_produk,
             'merk_produk': self.merk_produk,
-            'harga_produk': self.harga_produk,
-            'stok_produk': self.stok_produk,
+            'harga_produk': float(self.harga_produk) if self.harga_produk is not None else self.harga_produk,
+            'stok_produk': int(self.stok_produk) if self.stok_produk is not None else self.stok_produk,
             'uid_penjual': self.uid_penjual,
         }
 
@@ -91,8 +91,13 @@ class Produk(Base):
 class Pesanan(Base):
     __tablename__ = 'pesanan'
     id_pesanan = Column(Integer, primary_key=True)
-    id_produk = Column(Integer, ForeignKey('produk.id_produk'))
-    uid_pembeli = Column(Text, ForeignKey('pembeli.uid_pembeli'))  # FIXED: foreign key
+    id_produk = Column(Integer, ForeignKey('produk.id_produk',ondelete='CASCADE'))
+    uid_pembeli = Column(Text, ForeignKey('pembeli.uid_pembeli',ondelete='CASCADE')) 
+    metode_pembayaran = Column(Text)
+    alamat = Column(Text)
+    kode_pos = Column(Text)
+    kota = Column(Text)
+    nomor_handphone = Column(Text)
     jumlah_pesanan = Column(Integer)
     tanggal_pesanan = Column(Text)
     status_pesanan = Column(Text)
@@ -105,6 +110,11 @@ class Pesanan(Base):
             'id_pesanan': self.id_pesanan,
             'id_produk': self.id_produk,
             'uid_pembeli': self.uid_pembeli,
+            'metode_pembayaran': self.metode_pembayaran,
+            'alamat': self.alamat,
+            'kode_pos': self.kode_pos,
+            'kota': self.kota,
+            'nomor_handphone': self.nomor_handphone,
             'jumlah_pesanan': self.jumlah_pesanan,
             'tanggal_pesanan': self.tanggal_pesanan,
             'status_pesanan': self.status_pesanan,
@@ -114,7 +124,7 @@ class Pesanan(Base):
 class FotoProduk(Base):
     __tablename__ = 'foto_produk'
     id_foto_produk = Column(Integer, primary_key=True)
-    id_produk = Column(Integer, ForeignKey('produk.id_produk'))
+    id_produk = Column(Integer, ForeignKey('produk.id_produk',ondelete='CASCADE'))
     foto_produk = Column(Text)
 
     produk = relationship('Produk', back_populates='foto')

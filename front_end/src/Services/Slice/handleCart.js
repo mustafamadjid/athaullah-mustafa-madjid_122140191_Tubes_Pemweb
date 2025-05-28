@@ -16,13 +16,13 @@ const handleCartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id_produk === action.payload.id_produk
       );
 
       if (itemIndex >= 0) {
         state.cartItems[itemIndex].cartQuantity += 1;
         toast.info(
-          `${action.payload.title} berhasil ditambahkan ke keranjang ${state.cartItems[itemIndex].cartQuantity}`,
+          `${action.payload.nama_produk} berhasil ditambahkan ke keranjang ${state.cartItems[itemIndex].cartQuantity}`,
           {
             position: "top-right",
             autoClose: 2000,
@@ -32,7 +32,7 @@ const handleCartSlice = createSlice({
         const tempProduct = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProduct);
         toast.success(
-          `${action.payload.title} berhasil ditambahkan ke keranjang`,
+          `${action.payload.nama_produk} berhasil ditambahkan ke keranjang`,
           {
             position: "top-right",
             autoClose: 2000,
@@ -44,19 +44,19 @@ const handleCartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       const nextCartItems = state.cartItems.filter(
-        (cartItem) => cartItem.id !== action.payload.id
+        (cartItem) => cartItem.id_produk !== action.payload.id_produk
       );
 
       state.cartItems = nextCartItems;
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       toast.error(
-        `${action.payload.title} berhasil dihapus dari keranjang`,
+        `${action.payload.nama_produk} berhasil dihapus dari keranjang`,
         {}
       );
     },
     decreaseCart: (state, action) => {
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item.id_produk === action.payload.id_produk
       );
 
       if (itemIndex >= 0) {
@@ -84,8 +84,8 @@ const handleCartSlice = createSlice({
     getTotals: (state, action) => {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          const { price, cartQuantity } = cartItem;
-          const itemTotal = price * cartQuantity;
+          const { harga_produk, cartQuantity } = cartItem;
+          const itemTotal = harga_produk * cartQuantity;
 
           cartTotal.total += itemTotal;
           cartTotal.quantity += cartQuantity;

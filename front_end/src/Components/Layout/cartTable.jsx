@@ -5,10 +5,13 @@ const CartTable = ({
   handleDecreaseCart,
 }) => {
   const qtyPrice = (qty, price) => {
+    console.log(qty);
     return (qty * price).toLocaleString("id-ID", {
       style: "currency",
       currency: "IDR",
     });
+
+   
   };
 
   return (
@@ -26,26 +29,27 @@ const CartTable = ({
         </thead>
         <tbody>
           {cartItems.map((item) => (
-            <tr key={item.id} className="hover:bg-slate-50">
+            <tr key={item.id_produk} className="hover:bg-slate-50">
               <td className="p-4 border-b border-slate-200 flex flex-col lg:flex-row gap-5 items-center">
                 <div className="w-full lg:w-1/2">
                   <img
-                    src={item.images[0]}
-                    alt={item.title}
+                    src={`${import.meta.env.VITE_API_URL}/produk/${item.id_produk}/foto`}
+                    alt={item.nama_produk}
                     className="max-w-[100px] lg:max-w-[120px] mx-auto hover:shadow-lg hover:bg-white"
                   />
                 </div>
                 <div className="flex flex-col gap-3 lg:gap-5 text-center lg:text-left">
                   <p className="text-sm lg:text-lg font-semibold">
-                    {item.title}
+                    {item.nama_produk}
                   </p>
                   <p className="py-1 px-3 w-fit bg-green-500 text-white rounded-lg text-xs lg:text-base">
-                    {item.category}
+                    {item.kategori_produk}
                   </p>
                 </div>
               </td>
               <td className="p-4 text-center text-xs lg:text-lg border-slate-200 border-b">
-                {qtyPrice(item.cartQuantity, item.price)}
+                {qtyPrice(item.cartQuantity, item.harga_produk)}
+               
               </td>
               <td className="p-4 border-b border-slate-200">
                 <div className="flex justify-center items-center gap-3 lg:gap-5">
