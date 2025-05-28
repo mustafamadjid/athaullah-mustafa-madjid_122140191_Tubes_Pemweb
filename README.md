@@ -43,47 +43,82 @@ TokoIjo merupakan aplikasi e-commerce berbasis website yang dibangun untuk memud
 
 Instruksi di bawah ini berguna jika anda ingin melakukan copy terhadap aplikasi web ini agar dapat dijalankan secara lokal di komputer anda.
 
-### Dependensi Paket (Library) yang digunakan dalam aplikasi
 
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-- Redux JS Toolkit
-- React-Redux
-- React-Router
-- Axios
+## ⛏️ Proyek ini Dibangun Menggunakan <a name = "built_using"></a>
+
+### Code Editor
+- [VSCode](https://code.visualstudio.com/) - Code Editor
+
+### Frontend
+- [Vite](https://vite.dev/) - Web Build tool
+- [ReactJS](https://react.dev/) - Javascript Library
+- [Redux](https://react-redux.js.org/) - React State Management
+- [React-Router](https://reactrouter.com/) - React Router
+- [Axios](https://axios-http.com/docs/intro) - Javascript HTTP Client
+- [TailwindCSS](https://tailwindcss.com/) - CSS Framework
+- [React-Slick](https://react-slick.neostack.com/) - Carousel UI
+- [Framer-Motion](https://motion.dev/) - Animation
+- [Lucide](https://lucide.dev/) - Icon Library
+- [NodeJs](https://nodejs.org/en/) - Javascript Runtime
+
+### Backend
+- [PostgreSQL](https://www.postgresql.org/) - Database
+- [SQLAlchemy](https://www.sqlalchemy.org/) - Python Database ORM
+- [Python](https://www.python.org/) - Backend Programming Language
+- [Pyramid](https://trypyramid.com/) - Backend Framework
+- [Cookiecutter](https://github.com/cookiecutter/cookiecutter) - Python Project Template
+- [Firebase Authentication](https://firebase.google.com/docs/auth) - Auhtentication Provider
 
 
-
-![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white&style=for-the-badge)
-- Tailwind CSS
-
-
-
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=Firebase&logoColor=white&style=for-the-badge)
-- Firebase
-
-
-
-![Material](https://img.shields.io/badge/Material-0081CB?style=for-the-badge&logo=material&logoColor=white)
-- Lucide Icon React
-- React Slick
-- React Toastify
-- Framer Motion
-- Slick Carousel
-- React Google Button
-
-### Installing
+## Installing
 
 Tahapan Menginstall proyek aplikasi web ini.
+
 
 Clone repository dari link ini ke folder anda
 ```
 git clone https://github.com/mustafamadjid/athaullah-mustafa-madjid_122140191_Tubes_Pemweb.git
 ```
-
-Pastikan anda telah menginstall node js terlebih dahulu. Jika sudah, akses folder melalui terminal anda. Contohnya 
-
+### Backend Setup
+Buat Folder untuk aplikasi backend. Contohnya : 
 ```
-D:\Root\Website\TokoIjo
+D:\Pemweb\UAS\back_end
+```
+
+Masuk ke folder dalam terminal, kemudian buat virtual environment python
+```
+python -m venv venv
+```
+
+Jalankan virtual environment
+```
+venv\Scripts\activate #untuk windows
+```
+
+Install dependency
+```
+pip install -e .
+```
+
+Pastikan bahwa anda telah menginstall PostgreSQL. Kemudian, pada file `development.ini` ubah variabel `sqlalchemy.url` sesuai dengan akun dan database anda
+```
+sqlalchemy.url = postgresql://db_user:db_pass@localhost:5432/your_db
+```
+
+Lakukan migrasi dan update database melalui perintah
+```
+alembic -c development.ini revision --autogenerate -m "init"
+alembic -c development.ini upgrade head
+```
+
+Jalankan Aplikasi Backend
+```
+pserve development.ini --reload
+```
+### Frontend Setup
+Pastikan anda telah menginstall node js terlebih dahulu. Jika sudah, buat folder khusus frontend di root folder
+```
+D:\Pemweb\UAS\Frontend
 ```
 
 kemudian install semua dependency melalui perintah ini
@@ -97,7 +132,6 @@ Jalankan aplikasi dengan perintah
 ```
 npm run dev
 ```
-
 
 
 ## 🎈 Fitur-Fitur Dalam Aplikasi <a name="usage"></a>
