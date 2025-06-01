@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="assets/tokoijo.png" alt="Project logo"></a>
+ <img width=300px height=200px src="assets/tokoijo.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">TokoIjo Web Application</h3>
