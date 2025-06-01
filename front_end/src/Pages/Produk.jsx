@@ -1,5 +1,5 @@
 // Import React
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Import Custom Hooks
 import useFetch from "../Services/Hooks/customFetch";
@@ -20,29 +20,24 @@ import { addToCart } from "../Services/Slice/handleCart";
 import { List, X } from "lucide-react";
 
 const Produk = () => {
-  // endpoint produk
-  const url = `${import.meta.env.VITE_API_URL}/produk`
-
   // State open
   const [open, isOpen] = useState(true);
-
-  // State untuk kategori produk
-  const [kategori, setKategori] = useState(kategoriList);
 
   // State untuk produk
   const [produk, setProduk] = useState();
 
-  
+  // State untuk url
+  const [url, setUrl] = useState(`${import.meta.env.VITE_API_URL}/produk`);
+
   // Fetch Produk
-  const {response,error,loading}= useFetch(url);
+  const allProduk = useFetch(url);
 
   // Mengambil dan menyimpan data produk ke state
   useEffect(() => {
-    if (response?.status === 200) {
-      setProduk(response?.data);
+    if (allProduk.response?.status === 200) {
+      setProduk(allProduk.response?.data);
     }
-  }, [response?.data]);
-
+  }, [allProduk.response?.data]);
 
   // Redux State Dispatch
   const dispatch = useDispatch();
@@ -83,14 +78,21 @@ const Produk = () => {
         >
           <h1
             className="text-[15px] font-extrabold hover:text-green-700 cursor-pointer"
-            onClick={() => setUrl("https://dummyjson.com/products")}
+            onClick={() => setUrl(`${import.meta.env.VITE_API_URL}/produk`)}
           >
             All Categories
           </h1>
           <div className="flex flex-col gap-6 max-lg:overflow-scroll max-lg:gap-10">
             {kategoriList.map((category) => (
               <h1
-                className="text-[16px] font-semibold hover:text-green-700 cursor-pointer "
+                className="text-[16px] font-semibold hover:text-green-700 cursor-pointer"
+                onClick={() =>
+                  setUrl(
+                    `${
+                      import.meta.env.VITE_API_URL
+                    }/produk/kategori/${category}`
+                  )
+                }
               >
                 {category}
               </h1>
@@ -106,7 +108,6 @@ const Produk = () => {
                 key={produk.id_produk}
                 idProduk={produk.id_produk}
                 produk={produk}
-                titleVariant={"w-3/4"}
                 onAddToCart={handleAddToCart}
               />
             ))}

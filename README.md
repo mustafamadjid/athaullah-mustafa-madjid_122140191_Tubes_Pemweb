@@ -1,22 +1,19 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
+ <img width=200px height=200px src="assets/tokoijo.png" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">TokoIjo Web Application</h3>
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
 
 </div>
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> Aplikasi E-Commerce Berbasis Website
     <br> 
 </p>
 
@@ -24,13 +21,10 @@
 
 - [Tentang Aplikasi Web](#about)
 - [Memulai Aplikasi](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
+- [Fitur-fitur dalam aplikasi](#usage)
+- [Dependency](#built_using)
 - [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Referensi](#acknowledgement)
 
 ## 🧐 TokoIjo <a name = "about"></a>
 
@@ -136,27 +130,19 @@ npm run dev
 
 ## 🎈 Fitur-Fitur Dalam Aplikasi <a name="usage"></a>
 
-Add notes about how to use the system.
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
-
-## ⛏️ Built Using <a name = "built_using"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- Login menggunakan akun google
+- Menambahkan produk yang ingin dibeli ke keranjang
+- Checkout produk
+- Memantau pesanan yang sudah dibuat
+- Mengelola produk sebagai penjual
+- Mengelola data profil
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [mustafamadjid](https://github.com/mustafamadjid) - Creator
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
 
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+## Referensi <a name = "acknowledgement"></a>
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- [Praktikum Pemweb ITERA](https://prakifpemweb.vercel.app/)
+- [Programmer Zaman Now](https://www.youtube.com/@ProgrammerZamanNow)

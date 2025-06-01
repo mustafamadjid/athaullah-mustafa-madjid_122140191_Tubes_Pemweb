@@ -45,8 +45,9 @@ class Penjual(Base):
     nomor_handphone = Column(Text)
     gambar_profil = Column(Text)
     
-    # Relasi ke produk
+   
     produk = relationship('Produk', back_populates='penjual',cascade='all, delete-orphan')
+    pesanan = relationship('Pesanan', back_populates='penjual',cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -91,8 +92,9 @@ class Produk(Base):
 class Pesanan(Base):
     __tablename__ = 'pesanan'
     id_pesanan = Column(Integer, primary_key=True)
-    id_produk = Column(Integer, ForeignKey('produk.id_produk',ondelete='CASCADE'))
-    uid_pembeli = Column(Text, ForeignKey('pembeli.uid_pembeli',ondelete='CASCADE')) 
+    id_produk = Column(Integer, ForeignKey('produk.id_produk',ondelete='CASCADE'),nullable=True)
+    uid_pembeli = Column(Text, ForeignKey('pembeli.uid_pembeli',ondelete='CASCADE'),nullable=True)
+    uid_penjual = Column(Text, ForeignKey('penjual.uid_penjual',ondelete='CASCADE'),nullable=True)
     metode_pembayaran = Column(Text)
     alamat = Column(Text)
     kode_pos = Column(Text)
@@ -104,12 +106,14 @@ class Pesanan(Base):
 
     produk = relationship('Produk', back_populates='pesanan')
     pembeli = relationship('Pembeli', back_populates='pesanan')
+    penjual = relationship('Penjual', back_populates='pesanan')
 
     def to_dict(self):
         return {
             'id_pesanan': self.id_pesanan,
             'id_produk': self.id_produk,
             'uid_pembeli': self.uid_pembeli,
+            'uid_penjual': self.uid_penjual,
             'metode_pembayaran': self.metode_pembayaran,
             'alamat': self.alamat,
             'kode_pos': self.kode_pos,

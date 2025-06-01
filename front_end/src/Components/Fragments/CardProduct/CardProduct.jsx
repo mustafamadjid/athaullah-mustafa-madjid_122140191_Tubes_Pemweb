@@ -2,7 +2,12 @@ import PropTypes from "prop-types";
 
 import { ShoppingCart } from "lucide-react";
 
-const CardProduct = ({ product, onAddToCart, wrapVariant, titleVariant }) => {
+const CardProduct = ({ product, onAddToCart, wrapVariant, titleVariant,idProduk }) => {
+  // Url foto produk
+  const urlFotoProduk = `${
+    import.meta.env.VITE_API_URL
+  }/produk/${idProduk}/foto`;
+
   return (
     <>
       <div className={` ${wrapVariant} flex flex-col gap-5 p-4`}>
@@ -10,8 +15,8 @@ const CardProduct = ({ product, onAddToCart, wrapVariant, titleVariant }) => {
           <div className="bg-[#f7f7f5] p-4 max-h-86 ">
             <img
               className=" w-full mx-auto object-cover"
-              src={product?.images[0]}
-              alt={product?.title}
+              src={urlFotoProduk}
+              alt={product?.nama_produk}
             />
           </div>
         </div>
@@ -20,10 +25,10 @@ const CardProduct = ({ product, onAddToCart, wrapVariant, titleVariant }) => {
             <div
               className={`font-semibold text-[18px] text-[#272343] ${titleVariant} max-lg:text-xs`}
             >
-              {product?.title}
+              {product?.nama_produk}
             </div>
             <div className="max-lg:text-xs">
-              {product?.price.toLocaleString("id-ID", {
+              {product?.harga_produk.toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR",
               })}
@@ -43,7 +48,6 @@ const CardProduct = ({ product, onAddToCart, wrapVariant, titleVariant }) => {
   );
 
   //
-
 };
 CardProduct.propTypes = {
   product: PropTypes.object,

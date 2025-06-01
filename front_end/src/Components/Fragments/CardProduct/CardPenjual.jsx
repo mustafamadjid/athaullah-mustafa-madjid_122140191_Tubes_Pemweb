@@ -19,7 +19,7 @@ const CardPenjual = ({
       {/* Grid produk */}
       <div
         key={idProduk}
-        className="min-w-[300px] max-w-xs max-h-[500px] bg-white rounded-3xl shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col border border-[#e9eadf] relative group"
+        className="min-w-[300px] max-w-xs max-h-1/2 bg-white rounded-3xl shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col border border-[#e9eadf] relative group"
       >
         {/* Decorative accent */}
         <span className="absolute top-4 right-4 opacity-10 text-5xl rotate-12 pointer-events-none select-none"></span>

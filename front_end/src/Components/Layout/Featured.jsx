@@ -15,7 +15,9 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../Services/Slice/handleCart";
 
 const FeaturedProducts = () => {
-  const { response } = useFetch("https://dummyjson.com/products");
+  const { response } = useFetch(`${import.meta.env.VITE_API_URL}/produk`);
+
+  const [data,setData] = useState([]);
 
   var settings = {
     dots: false,
@@ -34,6 +36,11 @@ const FeaturedProducts = () => {
     dispatch(addToCart(product));
   };
 
+  // Set Data
+  useEffect(() => {
+    setData(response?.data);
+  }, [response?.data]);
+
   return (
     <>
       <div>
@@ -44,9 +51,10 @@ const FeaturedProducts = () => {
       <div className="slider-container">
         <Slider {...settings} className="">
           {/* <div className="flex  justify-center items-center gap-4"> */}
-          {response?.products.map((product) => (
+          {data?.map((product) => (
             <CardProduct
-              key={product.id}
+              key={product.id_produk}
+              idProduk={product.id_produk}
               product={product}
               wrapVariant={"max-w-sm"}
               titleVariant={"w-full"}

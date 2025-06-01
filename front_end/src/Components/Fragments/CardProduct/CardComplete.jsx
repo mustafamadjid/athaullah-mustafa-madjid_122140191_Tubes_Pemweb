@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const CardComplete = ({ produk,idProduk, onAddToCart, wrapVariant, titleVariant }) => {
+const CardComplete = ({ produk,idProduk, onAddToCart }) => {
 
   // Url foto produk
   const urlFotoProduk = `${
@@ -18,7 +18,7 @@ const CardComplete = ({ produk,idProduk, onAddToCart, wrapVariant, titleVariant 
   return (
     <>
       <div
-        className={` ${wrapVariant} max-w-1/2 max-h-full flex flex-col gap-5 p-4 border-4 rounded-t-lg border-green-200  hover:bg-green-100 `}
+        className={` lg:max-w-[350px] max-h-full flex flex-col gap-5 p-4 border-4 rounded-t-lg border-green-200  hover:bg-green-100 `}
       >
         <div className=" rounded-lg overflow-hidden shadow-lg inset-shadow-xs w-full">
           <div className="slider-container">
@@ -36,7 +36,7 @@ const CardComplete = ({ produk,idProduk, onAddToCart, wrapVariant, titleVariant 
         <div className="flex justify-between">
           <div className="flex flex-col gap-7">
             <div
-              className={`font-semibold text-[18px] text-[#272343] ${titleVariant}`}
+              className={`font-semibold text-[18px] text-[#272343] `}
             >
               {produk.nama_produk}
             </div>
